@@ -1,8 +1,6 @@
-# FROM scratch
-FROM mcr.microsoft.com/windows:20H2
-LABEL maintainer="vinjn.z@gmail.com"
+FROM alpine
 
-WORKDIR C:/app
-COPY vs2019/Release/demo.exe C:/app/
+ADD build/demo /app/
+WORKDIR /app/
 
-CMD [ "C:/app/demo.exe" ]
+# CMD ["demo"]

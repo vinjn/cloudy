@@ -1,3 +1,4 @@
 docker buildx build ^
     --platform windows/amd64 ^
-    -t vinjn/cloudy:latest . 
+    -t vinjn/cloudy:latest ^
+    -f Dockerfile-windows .
