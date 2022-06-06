@@ -1,1 +1,1 @@
-docker run -it -d -p 80:80 vinjn/cloudy
+docker run -it -d  vinjn/cloudy

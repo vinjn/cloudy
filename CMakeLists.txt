@@ -8,7 +8,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Linux)
     find_package(Threads REQUIRED)
 endif()
 
-#=== LIBRARY: cimgui + Dear ImGui
+#=== LIBRARY: cimgui + Dear ImGui + implot
 add_library(cimgui STATIC 
     cimgui/cimgui.cpp 
     cimgui/cimgui.h 
@@ -17,7 +17,12 @@ add_library(cimgui STATIC
     cimgui/imgui/imgui_widgets.cpp 
     cimgui/imgui/imgui_draw.cpp 
     cimgui/imgui/imgui_tables.cpp
-    cimgui/imgui/imgui_demo.cpp)
+    cimgui/imgui/imgui_demo.cpp
+    implot/implot.cpp
+    implot/implot_demo.cpp
+    implot/implot_items.cpp
+    )
+target_include_directories(cimgui PUBLIC cimgui/imgui)
 target_include_directories(cimgui INTERFACE cimgui)
 
 #=== LIBRARY: sokol
@@ -45,10 +50,23 @@ endif()
 target_link_libraries(sokol PUBLIC cimgui)
 target_include_directories(sokol INTERFACE sokol)
 
+
+#=== LIBRARY: nvperf sdk
+# add headers to the the file list because they are useful to have in IDEs
+# set(NVPERF_HEADERS
+#     nvperf/include
+#     nvperf/utility)
+# add_library(nvperf STATIC nvperf/include/nvperf_common.h)
+# target_include_directories(nvperf INTERFACE nvperf/include)
+# target_include_directories(nvperf INTERFACE nvperf/utility)
+
 #=== EXECUTABLE: demo
 if(CMAKE_SYSTEM_NAME STREQUAL Windows)
     add_executable(demo WIN32 demo.c)
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT demo)
+    target_include_directories(demo PRIVATE nvperf/include)
+    target_include_directories(demo PRIVATE nvperf/utility)
+    target_link_directories(demo PRIVATE nvperf/lib)
 else()
     add_executable(demo demo.c)
 endif()
