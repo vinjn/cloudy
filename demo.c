@@ -7,6 +7,7 @@
 #define CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 #include "cimgui.h"
 #include "sokol_imgui.h"
+#include "perf.h"
 
 static struct {
     sg_pass_action pass_action;
@@ -20,6 +21,10 @@ static void init(void) {
     state.pass_action = (sg_pass_action) {
         .colors[0] = { .action = SG_ACTION_CLEAR, .value = { 0.0f, 0.5f, 1.0f, 1.0 } }
     };
+
+    setup();
+
+    int a = 0;
 }
 
 static void frame(void) {

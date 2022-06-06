@@ -62,13 +62,13 @@ target_include_directories(sokol INTERFACE sokol)
 
 #=== EXECUTABLE: demo
 if(CMAKE_SYSTEM_NAME STREQUAL Windows)
-    add_executable(demo WIN32 demo.c)
+    add_executable(demo WIN32 demo.c perf.h perf.cpp)
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT demo)
     target_include_directories(demo PRIVATE nvperf/include)
     target_include_directories(demo PRIVATE nvperf/utility)
     target_link_directories(demo PRIVATE nvperf/lib)
 else()
-    add_executable(demo demo.c)
+    add_executable(demo demo.c perf.h perf.cpp)
 endif()
 target_link_libraries(demo sokol)
 
